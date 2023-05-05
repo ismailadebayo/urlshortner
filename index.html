@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+
+div{
+    background:whitesmoke;
+    width: 60%;
+    margin-left:auto;
+    margin-right: auto;
+    height: 500px;
+    margin-top:30px;
+}
+input[type=text] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 2px solid red;
+  border-radius: 4px;
+}
+input[type=text]:focus {
+  background-color: lightblue;
+}
+#submit-button{
+  background-color: red;
+  border: none;
+  color: whitesmoke;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+</style>
+<body>
+    <div>
+    <h1>URL SHORTENER</h1>
+    <label for="" id="longurllabel">LONG URL</label>
+    <input type="text" id="longurl">
+
+    <label for="" id="shorturllabel">SHORT URL</label>
+    <input type="text" id="shorturl">
+    <p id="myP"></p>
+
+    <label for="" id="submitlabel"></label>
+    <input type="submit" value="Shorten your url" id="submit-button">
+
+    <script>
+        function urlShortener(){
+        let longUrl= document.querySelector('#longurl').value;
+        let theApi = 'https://api.shrtco.de/v2/shorten?url=example.org/very/long/link.html';
+        let result=theApi.replace('example.org/very/long/link.html', longUrl);
+        fetch(result)
+        .then(response=>response.json())
+        .then((myResult)=>{
+                 let theShortLink = myResult.result.short_link;
+                 document.querySelector('#shorturl').value= theShortLink;
+            })
+        .catch((error)=>{
+            document.querySelector('#myP').value= 'There is an error';
+        })
+
+        }
+        
+        let submitButton = document.querySelector('#submit-button');
+        submitButton.addEventListener('click', urlShortener);
+        
+
+    </script>
+    </div>
+</body>
+</html>
